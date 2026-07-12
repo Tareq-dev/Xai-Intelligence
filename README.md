@@ -16,6 +16,16 @@ https://xai-intelligence-trk.vercel.app
 
 ---
 
+---
+
+# 🌐 Figma File
+
+```
+https://www.figma.com/design/ZPrWAEp8SlVLgr9dIPmwmN/X-AI?node-id=0-1&p=f
+```
+
+---
+
 # 📌 Project Overview
 
 **XAI** is a futuristic AI intelligence platform landing page that visualizes the transformation of raw data into intelligent systems.
