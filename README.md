@@ -1,4 +1,4 @@
-# NEXUS AI — Intelligent Data Transformation Platform
+# Xai— Intelligent Data Transformation Platform
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
