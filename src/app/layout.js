@@ -1,4 +1,5 @@
 import "./globals.css";
+import ClientEffects from "@/components/effects/ClientEffects";
 
 export const metadata = {
   title: "Xai – Intelligence",
@@ -8,6 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <ClientEffects />
       <body>{children}</body>
     </html>
   );
