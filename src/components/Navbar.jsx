@@ -33,7 +33,7 @@ export default function Navbar() {
             <div>
               <h1 className="font-bold text-xl">Xai</h1>
 
-              <p className="text-[10px] tracking-[4px] text-cyan-300">
+              <p className="text-[10px] tracking-[2px] text-cyan-300">
                 INTELLIGENCE
               </p>
             </div>

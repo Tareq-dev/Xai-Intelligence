@@ -75,12 +75,16 @@ export default function Dashboard() {
         <div className="dashboard-shell grid lg:grid-cols-[260px_1fr] rounded-[40px] overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-2xl">
           <aside className="border-r border-white/10 p-6 bg-black/20">
             <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 rounded-xl bg-cyan-300" />
+              <div className="w-10 h-10 flex justify-center items-center text-black font-bold rounded-xl bg-cyan-300">
+                AI
+              </div>
 
               <div>
-                <h3 className="font-semibold">NEXUS AI</h3>
+                <h3 className="font-semibold">Xai</h3>
 
-                <p className="text-xs text-gray-500">Core System</p>
+                <p className="text-[10px] tracking-[2px] text-cyan-300">
+                  INTELLIGENCE
+                </p>
               </div>
             </div>
 
@@ -89,7 +93,7 @@ export default function Dashboard() {
                 <button
                   key={tab}
                   onClick={() => setActive(tab)}
-                  className={`w-full text-left px-5 py-3 rounded-xl transition ${
+                  className={`w-full cursor-pointer text-left px-5 py-3 rounded-xl transition ${
                     active === tab
                       ? "bg-cyan-300 text-black"
                       : "text-gray-400 hover:bg-white/5"
@@ -176,10 +180,10 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  <div className="rounded-3xl border border-white/10 p-8 bg-white/[0.03]">
+                  <div className="rounded-3xl border border-white/10 p-8 bg-white/3">
                     <h4>AI Intelligence Score</h4>
 
-                    <div className="relative w-44 h-44 mx-auto mt-10 rounded-full border-[14px] border-cyan-300/20 flex items-center justify-center">
+                    <div className="relative w-44 h-44 mx-auto mt-10 rounded-full border-14 border-cyan-300/20 flex items-center justify-center">
                       <span className="text-4xl font-bold">96</span>
                     </div>
 
