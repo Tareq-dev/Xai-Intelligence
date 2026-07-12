@@ -31,7 +31,7 @@ export default function Navbar() {
             </div>
 
             <div>
-              <h1 className="font-bold text-xl">NEXUS</h1>
+              <h1 className="font-bold text-xl">Xai</h1>
 
               <p className="text-[10px] tracking-[4px] text-cyan-300">
                 INTELLIGENCE
