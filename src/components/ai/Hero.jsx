@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import AIHeroCore from "./AIHeroCore";
 
 export default function Hero() {
   return (
@@ -84,7 +85,7 @@ export default function Hero() {
           className="relative flex justify-center items-center ml-[-80px] md:ml-0 order-first lg:order-last"
         >
           <div className="w-105 h-105 lg:w-130 lg:h-130">
-           
+            <AIHeroCore />
           </div>
         </motion.div>
       </div>
