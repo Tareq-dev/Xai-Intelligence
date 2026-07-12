@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Dashboard from "@/components/ai/Dashboard";
 import Flow from "@/components/ai/Flow";
+import Footer from "@/components/ai/Footer";
 import Hero from "@/components/ai/Hero";
 import NeuralUniverse from "@/components/ai/NeuralUniverse";
 
@@ -14,6 +15,7 @@ export default function Page() {
       <Flow />
       <Dashboard />
       <NeuralUniverse />
+      <Footer />
     </main>
   );
 }
