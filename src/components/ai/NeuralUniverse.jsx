@@ -18,30 +18,44 @@ export default function NeuralUniverse() {
   useEffect(() => {
     const container = canvas.current;
 
+    if (!container) return;
+
+    const isMobile = window.innerWidth < 640;
+
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100); //  (FOV, aspect, near, far);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
 
-    camera.position.z = 9;
+    camera.position.z = isMobile ? 7 : 9;
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
     });
 
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
     function resize() {
-      const size = container.clientWidth;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
 
-      renderer.setSize(size, size);
+      renderer.setSize(width, height);
 
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.aspect = width / height;
+
+      camera.updateProjectionMatrix();
     }
 
     resize();
 
     container.appendChild(renderer.domElement);
 
-    const COUNT = 900;
+    window.addEventListener("resize", resize);
+
+    // Mobile 500 particle
+    // Desktop 900 particle
+
+    const COUNT = window.innerWidth < 640 ? 500 : 900;
 
     const geometry = new THREE.BufferGeometry();
 
@@ -62,7 +76,7 @@ export default function NeuralUniverse() {
         z: (Math.random() - 0.5) * 4,
       });
 
-      // NEURAL BRAIN FORM
+      // BRAIN FORM
 
       const angle = (i / COUNT) * Math.PI * 2;
 
@@ -74,16 +88,16 @@ export default function NeuralUniverse() {
         z: Math.sin(i * 0.2) * 0.5,
       });
 
-      // INTELLIGENCE CUBE
+      // CUBE FORM
 
-      const size = 1.8;
+      const cubeSize = 2.5;
 
       cube.push({
-        x: (Math.random() - 0.5) * size,
+        x: (Math.random() - 0.5) * cubeSize,
 
-        y: (Math.random() - 0.5) * size,
+        y: (Math.random() - 0.5) * cubeSize,
 
-        z: (Math.random() - 0.5) * size,
+        z: (Math.random() - 0.5) * cubeSize,
       });
 
       positions[i * 3] = raw[i].x;
@@ -93,18 +107,26 @@ export default function NeuralUniverse() {
       positions[i * 3 + 2] = raw[i].z;
     }
 
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute(
+      "position",
+
+      new THREE.BufferAttribute(positions, 3),
+    );
 
     const material = new THREE.PointsMaterial({
       color: "#67e8f9",
 
-      size: 0.05,
+      // Mobile particle
+
+      size: isMobile ? 0.08 : 0.05,
 
       transparent: true,
 
       opacity: 0.9,
 
       blending: THREE.AdditiveBlending,
+
+      depthWrite: false,
     });
 
     const points = new THREE.Points(geometry, material);
@@ -119,6 +141,7 @@ export default function NeuralUniverse() {
 
     lineGeometry.setAttribute(
       "position",
+
       new THREE.BufferAttribute(lineArray, 3),
     );
 
@@ -130,7 +153,11 @@ export default function NeuralUniverse() {
       opacity: 0.25,
     });
 
-    const network = new THREE.LineSegments(lineGeometry, lineMaterial);
+    const network = new THREE.LineSegments(
+      lineGeometry,
+
+      lineMaterial,
+    );
 
     scene.add(network);
 
@@ -141,23 +168,28 @@ export default function NeuralUniverse() {
     ScrollTrigger.create({
       trigger: wrapper.current,
 
-      start: "top 60%",
+      start: "top 85%",
 
-      end: "bottom 30%",
+      end: "bottom 10%",
 
-      scrub: 2,
+      scrub: 1.2,
 
       onUpdate(self) {
         progress.value = self.progress;
 
-        if (self.progress < 0.3) setMode("RAW SIGNALS");
-        else if (self.progress < 0.65) setMode("NEURAL PROCESSING");
-        else setMode("INTELLIGENCE CORE");
+        if (self.progress < 0.3) {
+          setMode("RAW SIGNALS");
+        } else if (self.progress < 0.65) {
+          setMode("NEURAL PROCESSING");
+        } else {
+          setMode("INTELLIGENCE CORE");
+        }
       },
     });
 
     const mouse = {
       x: 0,
+
       y: 0,
     };
 
@@ -168,8 +200,6 @@ export default function NeuralUniverse() {
     }
 
     window.addEventListener("mousemove", mouseMove);
-
-    window.addEventListener("resize", resize);
 
     let frame;
 
@@ -226,9 +256,11 @@ export default function NeuralUniverse() {
 
       points.rotation.z += (mouse.x * 0.3 - points.rotation.z) * 0.03;
 
-      camera.position.x += (mouse.x * 0.8 - camera.position.x) * 0.03;
+      const move = isMobile ? 0.4 : 0.8;
 
-      camera.position.y += (mouse.y * 0.8 - camera.position.y) * 0.03;
+      camera.position.x += (mouse.x * move - camera.position.x) * 0.03;
+
+      camera.position.y += (mouse.y * move - camera.position.y) * 0.03;
 
       renderer.render(scene, camera);
 
@@ -274,45 +306,55 @@ export default function NeuralUniverse() {
   return (
     <section
       ref={wrapper}
-      className="relative min-h-screen bg-[#020617] px-6 py-10 overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-[#020617] px-4 py-8 text-white lg:px-10"
     >
-      <div className="absolute w-[600px] h-[600px] bg-cyan-400/10 blur-[160px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      {/* Background Glow */}
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10  items-center">
-        <div>
-          <p className="text-cyan-300 tracking-[6px] text-sm">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[100px] lg:h-[650px] lg:w-[650px] lg:blur-[160px]" />
+
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+        {/* LEFT CONTENT */}
+
+        <div className="text-center lg:text-left">
+          <p className="text-xs tracking-[5px] text-cyan-300 sm:text-sm sm:tracking-[6px]">
             SIGNATURE AI CORE
           </p>
 
-          <h2 className="text-5xl md:text-7xl font-bold mt-6 leading-tight">
+          <h2 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
             AI that
-            <span className="text-cyan-300">evolves.</span>
+            <span className="block text-cyan-300">evolves.</span>
           </h2>
 
-          <p className="mt-6 text-gray-400 text-lg max-w-xl">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-gray-400 sm:text-base md:text-lg lg:mx-0 lg:mt-6">
             Raw data reorganizes into neural intelligence, structured systems
             and predictive decisions.
           </p>
 
-          <div className="mt-10 flex gap-4 flex-wrap">
-            <div className="px-6 py-3 rounded-full border border-cyan-300/30 bg-cyan-300/10 text-cyan-300">
+          {/* Buttons */}
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+            <div className="rounded-full border border-cyan-300/30 bg-cyan-300/10 px-5 py-3 text-xs font-medium tracking-wide text-cyan-300 backdrop-blur-md sm:text-sm">
               {mode}
             </div>
 
             <button
               onClick={activate}
-              className="activate-btn px-6 py-3 rounded-full bg-cyan-300 text-black font-semibold"
+              className="activate-btn rounded-full bg-cyan-300 px-5 py-3 text-xs font-semibold text-black transition hover:bg-cyan-200 sm:text-sm"
             >
               Activate Core
             </button>
           </div>
         </div>
 
+        {/* THREE JS CANVAS */}
+
         <div
           ref={canvas}
-          className="relative w-full max-w-[350px] mx-auto md:max-w-none md:w-full md:ml-0 h-[350px] lg:h-[600px]"
+          className="relative mx-auto h-[400px] w-full max-w-[500px] overflow-hidden lg:h-[600px] lg:max-w-none"
         >
-          <div className="absolute inset-20 bg-cyan-400/20 blur-[120px] rounded-full" />
+          {/* Inner Glow */}
+
+          <div className="pointer-events-none absolute inset-[20%] rounded-full bg-cyan-400/20 blur-[80px] sm:blur-[120px]" />
         </div>
       </div>
     </section>

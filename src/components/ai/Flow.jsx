@@ -28,7 +28,7 @@ export default function Flow() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: root,
-          start: "top 10%",
+          start: "top 5%",
           end: "center 50%",
           scrub: 2,
         },
@@ -48,7 +48,7 @@ export default function Flow() {
           opacity: 1,
           scale: 1,
           rotate: 360,
-          duration: 2,
+          duration: 2.6,
         })
         .to(".insight-box", {
           opacity: 1,

@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ClientEffects />
+        {/* <ClientEffects /> */}
         {children}
       </body>
     </html>

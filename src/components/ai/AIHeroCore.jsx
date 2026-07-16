@@ -18,7 +18,7 @@ export default function AIHeroCore() {
 
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); //  (FOV, aspect, near, far);
 
-    camera.position.z = 7;
+    camera.position.z = 6;
 
     // 3D scene to pixel
     const renderer = new THREE.WebGLRenderer({
@@ -30,7 +30,7 @@ export default function AIHeroCore() {
 
     canvas.current.appendChild(renderer.domElement);
 
-    const COUNT = 700;
+    const COUNT = 600;
 
     const geometry = new THREE.BufferGeometry();
 
@@ -59,7 +59,7 @@ export default function AIHeroCore() {
 
       // INTELLIGENCE GRID
 
-      const size = 2.5;
+      const size = 2.0;
 
       const row = Math.floor(i / 20);
 
@@ -89,7 +89,7 @@ export default function AIHeroCore() {
     const material = new THREE.PointsMaterial({
       color: "#67e8f9",
 
-      size: 0.035,
+      size: 0.055,
     });
 
     const points = new THREE.Points(geometry, material);
@@ -103,9 +103,9 @@ export default function AIHeroCore() {
     ScrollTrigger.create({
       trigger: canvas.current,
 
-      start: "top 60%",
+      start: "top 90%",
 
-      end: "bottom 20%",
+      end: "bottom 10%",
 
       scrub: true,
 
